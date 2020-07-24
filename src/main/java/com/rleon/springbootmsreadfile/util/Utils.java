@@ -1,28 +1,31 @@
 package com.rleon.springbootmsreadfile.util;
 
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Slf4j
 public class Utils {
 
     public static String validateString(String value) {
-        StringBuilder msj = new StringBuilder();
-        if (isNumeric(value.substring(0, 1))) {
-            log.info("No, porque empieza con un numero, ");
-            msj.append("No, porque empieza con un numero, ");
-        }
-        if (!validateAlfanumeric(value)) {
-            log.info("No, porque empieza con un numero, ");
-            msj.append("No porque contiene caracteres no alfanuméricos, ");
+        String msj = "";
+        if (!isNumeric(value.substring(0, 1))) {
+            if (!validateAlfaNumeric(value)) {
+                msj = "No porque contiene caracteres no alfanuméricos";
+            } else {
+                msj = "Si tiene una sintanxis correcta";
+            }
         } else {
-            msj.append("Si tiene una sintanxis correcta");
+            msj = "No, porque empieza con un numero";
         }
-        return msj.toString();
+        return msj;
     }
 
-    public static boolean validateAlfanumeric(String value) {
-        return Pattern.matches("^[A-Za-z0-9]+$", value);
+    public static boolean validateAlfaNumeric(String value) {
+        Pattern regex = Pattern.compile("^[a-zA-Z_][a-zA-Z0-9_]+$");
+        Matcher regexMatcher = regex.matcher(value);
+        return regexMatcher.find();
     }
 
     public static boolean isNumeric(String val) {
