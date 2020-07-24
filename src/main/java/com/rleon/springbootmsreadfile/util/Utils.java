@@ -23,7 +23,7 @@ public class Utils {
     }
 
     public static boolean validateAlfaNumeric(String value) {
-        Pattern regex = Pattern.compile("^[a-zA-Z_][a-zA-Z0-9_]+$");
+        Pattern regex = Pattern.compile("^[a-zA-Z0-9_]+$");
         Matcher regexMatcher = regex.matcher(value);
         return regexMatcher.find();
     }
